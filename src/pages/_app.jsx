@@ -2,7 +2,6 @@ import Layout from '../components/Layout';
 import App from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router'
-import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../styles/theme.js';
 import NProgress from 'nprogress';
@@ -35,14 +34,10 @@ class MyApp extends App {
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
         </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
 
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </ThemeProvider>
       </>
     );
   }
