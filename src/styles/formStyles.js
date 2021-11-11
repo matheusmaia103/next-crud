@@ -7,8 +7,10 @@ const formStyles = makeStyles({
     maxWidth: '800px',
   },
   smallInputs: {
-    marginLeft: '5px',
-    maxWidth: '254px',
+    '@media(min-width : 860px)': {
+      marginLeft: '5px',
+      maxWidth: '254px',
+    },
   },
 });
 
