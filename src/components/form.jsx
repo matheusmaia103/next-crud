@@ -6,12 +6,14 @@ import {
   IconButton,
   Button,
   Select,
-  CircularProgress
+  CircularProgress,
+  Snackbar,
 } from '@material-ui/core';
 import formStyles from '../styles/formStyles';
 
 //Context API
 import { Store } from '../utils/Store';
+import { Alert, AlertTitle } from '@mui/material';
 
 export default function Form() {
   const classes = formStyles();
@@ -19,13 +21,35 @@ export default function Form() {
 
   //const {name, email, job, age, cpf, number} = {}
 
+  const [pessoa, setPessoa] = useState({
+    name: '',
+    age: 0,
+    job: '',
+    email: '',
+    cpf: '',
+    telefone: '',
+  });
+  
+  const {dialog} = state;
+  const {open} = dialog;
+  const [isOpen, setOpen] = useState(open);
+  const handleClose = (event, reason) =>{
+    if(reason === 'clickaway'){
+      return;
+    }
 
-  const [pessoa, setPessoa] = useState({name: '', age: 0, job: '', email: '', cpf: '', telefone: ''});
+    setOpen(false);
+  }
+
+  const handleClick = () =>{
+    setOpen(true);
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch({type: 'SAVE_NEW_PERSON', payload:{...pessoa}})
+    dispatch({ type: 'SAVE_NEW_PERSON', payload: { ...pessoa } });
     setPessoa({ name: '', age: 0, job: '', email: '', cpf: '', telefone: '' });
+    setOpen(true)
   };
   return (
     <Box
@@ -62,7 +86,7 @@ export default function Form() {
         label="Cargo"
         type="text"
         placeholder="Digite seu cargo"
-        required 
+        required
         value={pessoa.job}
         onChange={(e) => setPessoa({ ...pessoa, job: e.target.value })}
       />
@@ -99,6 +123,13 @@ export default function Form() {
       <Button type="submit" color="secondary" variant="contained" fullWidth>
         CADASTRAR
       </Button>
+
+      <Snackbar open={isOpen} autoHideDuration={4000} onClose={handleClose}>
+        <Alert onClose={handleClose} variant='outlined' severity={dialog.severity}>
+          <AlertTitle>{dialog.title}</AlertTitle>
+          {dialog.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

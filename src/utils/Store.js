@@ -1,5 +1,4 @@
 import { createContext, useReducer } from 'react';
-import { Alert, AlertTitle } from '@mui/material';
 import Cookies from 'js-cookie';
 
 export const Store = createContext();
@@ -10,6 +9,12 @@ const initialState = {
       ? JSON.parse(Cookies.get('people'))
       : [{ name: 'Matheus', age: 21, job: 'dev' }],
   },
+  dialog: {
+    message: '',
+    title: '',
+    open: false,
+    severity: 'success',
+  },
 };
 
 function Reducer(state, action) {
@@ -17,9 +22,20 @@ function Reducer(state, action) {
     case 'SAVE_NEW_PERSON':
       const newPerson = action.payload;
       const peopleUpdated = [newPerson, ...state.records.people];
-      alert('Item salvo!');
       Cookies.set('people', JSON.stringify(peopleUpdated));
-      return { ...state, records: { people: peopleUpdated } };
+      return {
+        ...state,
+        records: { people: peopleUpdated },
+        dialog: {
+          title: 'Sucesso!',
+          message: 'Cadastro realizado com sucesso!',
+          severity: 'success',
+          open: true,
+        },
+      };
+
+    case 'CLOSE_DIALOG':
+      return { ...state, dialog: { open: false } };
   }
 }
 

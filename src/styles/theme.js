@@ -9,9 +9,14 @@ const theme = createTheme({
       root: {
         // Some CSS
         //textTransform: 'none',
+        borderRadius: '50px',
+        paddingTop: '15px',
+        paddingBottom: '15px',
       },
       contained: {
-        margin: '10px auto',
+        background: 'linear-gradient(45deg, #b853ed, #290748)',
+        boxShadow: '0px 0px 40px -2px #b853ed',
+        margin: '40px auto',
       },
     },
     MuiTextField: {
@@ -27,7 +32,7 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#3c4dc9',
+      main: '#b853ed',
     },
     secondary: {
       main: '#203142',
